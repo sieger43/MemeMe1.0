@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="bKK-s0-KL3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="bKK-s0-KL3">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -53,13 +54,13 @@
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="jZm-05-Apx"/>
                         <barButtonItem title="XXX" id="HuE-Pl-VbW">
                             <connections>
-                                <action selector="pickAnImageFromCamera:" destination="BYZ-38-t0r" id="ce2-PZ-BHC"/>
+                                <action selector="pickAnImageFromCamera:" destination="BYZ-38-t0r" id="VA2-S5-cgc"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem width="84" style="plain" systemItem="fixedSpace" id="Wck-vt-h0O"/>
                         <barButtonItem title="Album" id="aXK-OV-IyJ">
                             <connections>
-                                <action selector="pickAnImage:" destination="BYZ-38-t0r" id="bEJ-sX-7oV"/>
+                                <action selector="pickAnImage:" destination="BYZ-38-t0r" id="9AJ-iW-W6c"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="5EE-VS-e8t"/>
@@ -82,7 +83,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="702" y="940"/>
+            <point key="canvasLocation" x="1011" y="939"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="BUh-IL-5cz">

@@ -11,8 +11,7 @@ import UIKit
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
 
     @IBOutlet weak var imageViewOutlet: UIImageView!
-    let pickerController = UIImagePickerController()
-    
+ 
     @IBOutlet weak var topTextField: UITextField!
     @IBOutlet weak var bottomTextField: UITextField!
     
@@ -23,26 +22,12 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.pickerController.delegate = self
-        
         self.toolbarItems?[1] = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.camera, target: self, action:(#selector(ViewController.pickAnImageFromCamera(_:))))
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.action, target: self, action:(#selector(ViewController.launchActivityView(_:))))
         self.navigationItem.leftBarButtonItem?.isEnabled = false
         
-        let memeTextAttributes : [String : AnyObject] =
-        [
-            NSAttributedStringKey.strokeColor.rawValue : UIColor.black,
-            NSAttributedStringKey.foregroundColor.rawValue : UIColor.white,
-            NSAttributedStringKey.font.rawValue : UIFont(name: "HelveticaNeue-CondensedBlack", size:40)!,
-            NSAttributedStringKey.strokeWidth.rawValue : -3.0 as AnyObject
-        ]
-        
-        topTextField.defaultTextAttributes = memeTextAttributes
-        topTextField.textAlignment = .center
-        topTextField.delegate = memeDelegate
-        bottomTextField.defaultTextAttributes = memeTextAttributes
-        bottomTextField.textAlignment = .center
-        bottomTextField.delegate = self
+        setupTextField(tf: topTextField)
+        setupTextField(tf: bottomTextField)
         
         theMeme = nil
     }
@@ -57,22 +42,49 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         super.viewWillDisappear(animated)
     }
     
+    func setupTextField(tf: UITextField) {
+        tf.defaultTextAttributes = [
+            NSAttributedStringKey.strokeColor.rawValue : UIColor.black,
+            NSAttributedStringKey.foregroundColor.rawValue : UIColor.white,
+            NSAttributedStringKey.font.rawValue : UIFont(name: "HelveticaNeue-CondensedBlack", size:40)!,
+            NSAttributedStringKey.strokeWidth.rawValue : -3.0 as AnyObject
+        ]
+        tf.textColor = UIColor.white
+        tf.tintColor = UIColor.white
+        tf.textAlignment = .center
+        tf.delegate = self
+    }
+    
     @IBAction func pickAnImageFromCamera(_ sender: AnyObject) {
-        pickerController.sourceType = UIImagePickerControllerSourceType.camera
-        self.present(pickerController, animated: true, completion: nil)
+        chooseImageFromCameraOrPhoto(source: UIImagePickerControllerSourceType.camera)
     }
     
     @IBAction func pickAnImage(_ sender: AnyObject) {
-        pickerController.sourceType = UIImagePickerControllerSourceType.photoLibrary
-        self.present(pickerController, animated: true, completion: nil)
+        chooseImageFromCameraOrPhoto(source: UIImagePickerControllerSourceType.photoLibrary)
+   }
+    
+    func chooseImageFromCameraOrPhoto(source: UIImagePickerControllerSourceType) {
+        let pickerController = UIImagePickerController()
+        pickerController.delegate = self
+        pickerController.allowsEditing = true
+        pickerController.sourceType = source
+        present(pickerController, animated: true, completion: nil)
     }
     
     @IBAction func launchActivityView(_ sender: AnyObject) {
         if(imageViewOutlet != nil){
             
             let image = generateMemedImage()
-            let nextController = UIActivityViewController(activityItems: [image], applicationActivities: nil)
-            self.present(nextController, animated: true, completion: nil)
+            let activityController = UIActivityViewController(activityItems: [image], applicationActivities: nil)
+            
+            activityController.completionWithItemsHandler = { activity, success, items, error in
+                if success {
+                    //self.save()
+                    self.dismiss(animated: true, completion: nil)
+                }
+            }
+            
+            self.present(activityController, animated: true, completion: nil)
         }
     }
     
